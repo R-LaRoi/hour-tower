@@ -31,6 +31,8 @@ As children correctly place numbers, they contribute to building a **neon-lit cl
 **Hour Tower** is built with a modular component architecture.
 
 ### 📁 Project Structure
+
+```
 hour-tower/
     ├── components/
     │   ├── __init__.py         # Package initialization
@@ -43,6 +45,7 @@ hour-tower/
     ├── game_logic.py           # Game state and logic management
     ├── main.py                 # Main application orchestrator
     └── README.md               # This file
+```
 ### 🔧 Key Components
 
 Each component handles a specific aspect of the game, promoting code reusability and clarity:
