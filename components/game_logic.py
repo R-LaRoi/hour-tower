@@ -4,6 +4,7 @@ Game logic and state management for Hour Tower
 
 import random
 import math
+import time
 from typing import List, Tuple
 from .colors import NeonColors
 from .clock_number import ClockNumber
@@ -22,6 +23,16 @@ class GameLogic:
         self.original_positions = []
         self.score = 0
         self.game_complete = False
+        self.start_time = time.time()
+        
+        # User progress dictionary
+        self.user_progress = {
+            "user": "player_name",
+            "level": 1,
+            "score": 0,
+            "completed": False,
+            "time_spent": 0.0
+        }
     
     def start_new_game(self):
         """Start a new game with random number placement"""
@@ -34,6 +45,10 @@ class GameLogic:
         # Reset game state
         self.score = 0
         self.game_complete = False
+        self.start_time = time.time()
+        self.user_progress["score"] = 0
+        self.user_progress["completed"] = False
+        self.user_progress["time_spent"] = 0.0
         
         # Get clock center for positioning numbers
         cx = self.clock_face.center_x
@@ -74,6 +89,7 @@ class GameLogic:
                 
                 # Update score and progress
                 self.score += 10
+                self.user_progress["score"] = self.score
                 self.tower.add_progress()
                 
                 # Play success sound
@@ -85,6 +101,8 @@ class GameLogic:
                 # Check if game is complete
                 if len(self.numbers) == 0:
                     self.game_complete = True
+                    self.user_progress["completed"] = True
+                    self.user_progress["time_spent"] = time.time() - self.start_time
                     self.sound_effects.play_victory()
                     self.message_display.show_victory()
                 
